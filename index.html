@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thread Synchronization Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" href="icon.png">
+</head>
+<body>
+  <header class="header">
+   <h1 class="title">
+  Thread Synchronization Visualizer
+  <img src="icon.png" class="title-icon">
+</h1>
+    <p>Interactive visualization of Mutex, Semaphore, Monitor, and Unsynchronized execution</p>
+  </header>
+
+  <main class="dashboard">
+    <section class="controls card">
+      <h2>Controls</h2>
+
+      <label for="mechanism">Select Mechanism</label>
+      <select id="mechanism">
+        <option value="mutex">Mutex</option>
+        <option value="semaphore">Semaphore</option>
+        <option value="monitor">Monitor</option>
+        <option value="none">Without Synchronization</option>
+      </select>
+
+      <label for="threadCount">Number of Threads</label>
+      <select id="threadCount">
+        <option value="3">3</option>
+        <option value="4" selected>4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label for="semaphoreLimit">Semaphore Limit</label>
+      <select id="semaphoreLimit">
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+
+      <label for="speed">Simulation Speed</label>
+      <input type="range" id="speed" min="500" max="2000" step="100" value="1000" />
+      <p id="speedValue">1000 ms</p>
+
+      <div class="button-group">
+        <button id="startBtn">Start</button>
+        <button id="pauseBtn">Pause</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+    </section>
+
+    <section class="simulation card">
+      <h2>Thread Execution Workspace</h2>
+      <div id="threadsContainer" class="threads-container"></div>
+
+      <div class="resource-box" id="resourceBox">
+        Shared Resource
+      </div>
+
+      <div class="legend-row">
+        <div class="legend-item">
+          <span class="legend-color" style="background:#cbd5e1;"></span> Ready
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background:#fcd34d;"></span> Waiting
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background:#4ade80;"></span> Running
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background:#f87171;"></span> Critical
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background:#60a5fa;"></span> Finished
+        </div>
+      </div>
+    </section>
+
+    <section class="analysis card">
+      <h2>Live Analysis Panel</h2>
+
+      <div class="info-box">
+        <h3>Current Action</h3>
+        <p id="currentAction">Waiting to start simulation...</p>
+      </div>
+
+      <div class="info-box">
+        <h3>Recommendation</h3>
+        <p id="recommendation">Choose a mechanism and start the simulation.</p>
+      </div>
+
+      <div class="info-box">
+        <h3>Statistics</h3>
+        <p>Total Waiting Events: <span id="waitingCount">0</span></p>
+        <p>Total Completed Threads: <span id="completedCount">0</span></p>
+      </div>
+    </section>
+  </main>
+
+  <section class="bottom-panel">
+    <div class="logs card">
+      <h2>Synchronization Event Log</h2>
+      <div id="logBox" class="log-box"></div>
+    </div>
+
+    <div class="charts-wrapper">
+      <div class="chart-section card">
+        <h2>Live Thread State Summary</h2>
+        <canvas id="threadChart"></canvas>
+      </div>
+
+      <div class="chart-section card">
+        <h2>Performance Summary</h2>
+        <canvas id="performanceChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
